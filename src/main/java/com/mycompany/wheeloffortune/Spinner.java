@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.wheeloffortune;
 /**
  *
  * @author jackstevens
  */
 import java.util.Random;
+import java.util.Scanner;
 public class Spinner {
     
     public int Spin(){
@@ -53,5 +50,11 @@ public class Spinner {
         }
         else
             return currentTotal+temp;
+    }
+    public String getName(){
+        Scanner read = new Scanner(System.in);
+        System.out.println("What is your name? ");
+        String name = read.nextLine();
+        return name;
     }
 }
