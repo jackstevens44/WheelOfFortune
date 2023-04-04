@@ -56,6 +56,6 @@ public class Spinner {
         System.out.println("What is your name? ");
         String name = read.nextLine();
         return name;
-            
+         
     }
 }
