@@ -17,8 +17,8 @@ import java.util.stream.*;
 import java.util.Scanner;
 
 public class WheelOfFortune {
-    private static String word = "programming";
-    private static char[] wordMask;
+    private static String word = "programming and computers";
+    private static char[] wordCover;
 
     public static void main(String[] args) {
         int[] playertotal = new int[3];       
@@ -29,26 +29,32 @@ public class WheelOfFortune {
         
         
         int currentPlayer = 1;
-        wordMask = new char[word.length()];
+        wordCover = new char[word.length()];
         for (int i = 0; i < word.length(); i++) {
-            wordMask[i] = '-';
+            wordCover[i] = '-';
         }
 
         Scanner scanner = new Scanner(System.in);
         while (!isWordGuessed()) {
+            for (int i = 0; i < word.length(); i++) {
+                    if (word.charAt(i) == ' ' && wordCover[i] == '-') {
+                        wordCover[i] = ' ';
+                         
+                    }
+            }
             spin = Spin();
             
             System.out.println("\nPlayer " + currentPlayer + "'s turn!");
             System.out.println("Your spin was: " + spin);
-            System.out.println("Current word: " + String.valueOf(wordMask));
+            System.out.println("Current word: " + String.valueOf(wordCover));
             System.out.print("Enter a letter or the entire word: ");
             String guess = scanner.nextLine().toLowerCase();
 
             if (guess.length() == 1) {
                 boolean foundLetter = false;
                 for (int i = 0; i < word.length(); i++) {
-                    if (word.charAt(i) == guess.charAt(0) && wordMask[i] == '-') {
-                        wordMask[i] = guess.charAt(0);
+                    if (word.charAt(i) == guess.charAt(0) && wordCover[i] == '-') {
+                        wordCover[i] = guess.charAt(0);
                         foundLetter = true;
                     }
                 }
@@ -74,7 +80,7 @@ public class WheelOfFortune {
     }
 
     private static boolean isWordGuessed() {
-        for (char c : wordMask) {
+        for (char c : wordCover) {
             if (c == '-') {
                 return false;
             }
