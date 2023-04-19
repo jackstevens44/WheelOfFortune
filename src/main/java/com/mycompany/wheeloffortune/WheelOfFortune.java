@@ -8,19 +8,29 @@ package com.mycompany.wheeloffortune;
  *
  * @author jackstevens
  */
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.*;
 import java.util.Scanner;
 
 public class WheelOfFortune {
-    private static String word = "programming and computers";
+    private static String word;
     private static char[] wordCover;
-
+    
     public static void main(String[] args) {
+        try {
+            String randomLine = getRandomLineFromFile("/Users/jackstevens/Downloads/samples.txt");
+            word = randomLine.toLowerCase();
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
         int[] playertotal = new int[3];       
         playertotal[0] = 0;
         playertotal[1] = 0;
@@ -44,7 +54,16 @@ public class WheelOfFortune {
             }
             spin = Spin();
             
+            
             System.out.println("\nPlayer " + currentPlayer + "'s turn!");
+            if (spin == -1){
+                playertotal[currentPlayer] = 0;
+                System.out.println("Bankrupt!");
+                spin = 0;
+            }
+            else
+                ;
+            System.out.println("You have "+ playertotal[currentPlayer]+" points");
             System.out.println("Your spin was: " + spin);
             System.out.println("Current word: " + String.valueOf(wordCover));
             System.out.print("Enter a letter or the entire word: ");
@@ -121,5 +140,22 @@ public class WheelOfFortune {
         }
         
         return spinValue;
+    }
+    public static String getRandomLineFromFile(String filePath) throws IOException {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+
+        if (lines.isEmpty()) {
+            throw new IOException("The file is empty.");
+        }
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(lines.size());
+        return lines.get(randomIndex);
     }
 }
