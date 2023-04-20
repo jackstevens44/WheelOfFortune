@@ -36,6 +36,7 @@ public class WheelOfFortune {
         playertotal[1] = 0;
         playertotal[2] = 0;
         int spin;
+        boolean turn = true;
         
         
         int currentPlayer = 1;
@@ -52,17 +53,20 @@ public class WheelOfFortune {
                          
                     }
             }
+            while(turn){
             spin = Spin();
             
             
             System.out.println("\nPlayer " + currentPlayer + "'s turn!");
             if (spin == -1){
                 playertotal[currentPlayer] = 0;
-                System.out.println("Bankrupt!");
+                System.out.println("BANKRUPT!!!!");
                 spin = 0;
             }
             else
                 ;
+            
+                
             System.out.println("You have "+ playertotal[currentPlayer]+" points");
             System.out.println("Your spin was: " + spin);
             System.out.println("Current word: " + String.valueOf(wordCover));
@@ -75,15 +79,16 @@ public class WheelOfFortune {
                     if (word.charAt(i) == guess.charAt(0) && wordCover[i] == '-') {
                         wordCover[i] = guess.charAt(0);
                         foundLetter = true;
+                        playertotal[currentPlayer] += spin;
                     }
                 }
 
                 if (foundLetter) {
                     System.out.println("Correct! The letter '" + guess + "' is in the word.");
-                    playertotal[currentPlayer] += spin;
                     System.out.println("You get " + spin+" points! Your new total is: " + playertotal[currentPlayer]);
                 } else {
                     System.out.println("Incorrect! The letter '" + guess + "' is not in the word.");
+                    turn =false;
                 }
             } else if (guess.equals(word)) {
                 break;
@@ -91,10 +96,13 @@ public class WheelOfFortune {
                 System.out.println("Incorrect! The word is not '" + guess + "'.");
             }
 
-            currentPlayer = 3 - currentPlayer; // Switch between 1 and 2
+             // Switch between 1 and 2
+            }
+            currentPlayer = 3 - currentPlayer;
+            turn = true;
         }
 
-        System.out.println("Congratulations, Player " + currentPlayer + "! You've correctly guessed the word: " + word);
+        System.out.println("Congratulations, Player " + currentPlayer + "! You've correctly guessed the word: " + word + "\nWe will cover an educational 1 on 1 tutoring session with Mr. Wilson in the ocean front al-inclusive Kansas State National Park Resort and Casino");
         scanner.close();
     }
 
