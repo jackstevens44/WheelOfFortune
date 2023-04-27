@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.*;
 import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class WheelOfFortune {
     private static String word;
@@ -37,6 +40,7 @@ public class WheelOfFortune {
         playertotal[2] = 0;
         int spin;
         boolean turn = true;
+        boolean fullword = true;
         
         
         int currentPlayer = 1;
@@ -44,16 +48,26 @@ public class WheelOfFortune {
         for (int i = 0; i < word.length(); i++) {
             wordCover[i] = '-';
         }
-
-        Scanner scanner = new Scanner(System.in);
-        while (!isWordGuessed()) {
-            for (int i = 0; i < word.length(); i++) {
+        for (int i = 0; i < word.length(); i++) {
                     if (word.charAt(i) == ' ' && wordCover[i] == '-') {
                         wordCover[i] = ' ';
                          
                     }
             }
+        Scanner scanner = new Scanner(System.in);
+        while (!isWordGuessed()) {
+            var frame = new JFrame();
+            var icon = new ImageIcon("/Users/jackstevens/Downloads/Wheel_of_Fortune_Round_1_template_Season_31.jpg");
+            var label = new JLabel(icon);
+            frame.add(label);
+            frame.setDefaultCloseOperation
+                (JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
+            
+        
             while(turn){
+            //insert code here
             spin = Spin();
             
             
@@ -90,12 +104,8 @@ public class WheelOfFortune {
                     System.out.println("Incorrect! The letter '" + guess + "' is not in the word.");
                     turn =false;
                 }
-            } else if (guess.equals(word)) {
-                break;
-            } else {
-                System.out.println("Incorrect! The word is not '" + guess + "'.");
             }
-
+            
              // Switch between 1 and 2
             }
             currentPlayer = 3 - currentPlayer;
