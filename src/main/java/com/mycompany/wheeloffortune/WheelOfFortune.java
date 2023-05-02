@@ -29,7 +29,7 @@ public class WheelOfFortune {
     
     public static void main(String[] args) {
         try {
-            String randomLine = getRandomLineFromFile("/Users/jackstevens/Downloads/samples.txt");
+            String randomLine = getRandomLineFromFile("/Users/jackstevens/Downloads/samples.txt"); //need path from your computer
             word = randomLine.toLowerCase();
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
@@ -41,6 +41,7 @@ public class WheelOfFortune {
         int spin;
         boolean turn = true;
         boolean fullword = true;
+        boolean isWordGuessed = false;
         
         
         int currentPlayer = 1;
@@ -55,9 +56,9 @@ public class WheelOfFortune {
                     }
             }
         Scanner scanner = new Scanner(System.in);
-        while (!isWordGuessed()) {
+        while (!isWordGuessed) {
             var frame = new JFrame();
-            var icon = new ImageIcon("/Users/jackstevens/Downloads/Wheel_of_Fortune_Round_1_template_Season_31.jpg");
+            var icon = new ImageIcon("/Users/jackstevens/Downloads/Wheel_of_Fortune_Round_1_template_Season_31.jpg"); //need path from your computer. This is just a pop up of the wheel for wheel of fortune.
             var label = new JLabel(icon);
             frame.add(label);
             frame.setDefaultCloseOperation
@@ -68,6 +69,27 @@ public class WheelOfFortune {
         
             while(turn){
             //insert code here
+            Scanner x = new Scanner(System.in);
+            System.out.println("Please select '1' and hit enter if you would like to guess the phrase. Otherwise press any other key and hit enter");
+
+            String x1 = x.nextLine();
+
+            
+            Scanner read = new Scanner(System.in);
+            if(x1.equals("1")) {
+                System.out.println("Please enter your phrase");
+                String word1 = read.nextLine();
+                if (word1.equals(word)) {
+                    System.out.println("correct");
+                    isWordGuessed = true;
+                    break;
+                    
+                }
+                if (!word1.equals(word)) {
+                    System.out.println("incorrect");
+                }
+            
+            }
             spin = Spin();
             
             
@@ -84,7 +106,7 @@ public class WheelOfFortune {
             System.out.println("You have "+ playertotal[currentPlayer]+" points");
             System.out.println("Your spin was: " + spin);
             System.out.println("Current word: " + String.valueOf(wordCover));
-            System.out.print("Enter a letter or the entire word: ");
+            System.out.print("Enter a letter: ");
             String guess = scanner.nextLine().toLowerCase();
 
             if (guess.length() == 1) {
@@ -103,12 +125,13 @@ public class WheelOfFortune {
                 } else {
                     System.out.println("Incorrect! The letter '" + guess + "' is not in the word.");
                     turn =false;
+                    currentPlayer = 3 - currentPlayer;
                 }
             }
             
              // Switch between 1 and 2
             }
-            currentPlayer = 3 - currentPlayer;
+            
             turn = true;
         }
 
@@ -116,14 +139,7 @@ public class WheelOfFortune {
         scanner.close();
     }
 
-    private static boolean isWordGuessed() {
-        for (char c : wordCover) {
-            if (c == '-') {
-                return false;
-            }
-        }
-        return true;
-    }
+    
     public static int Spin(){
         int spinValue = 0;
         Random r = new Random();
